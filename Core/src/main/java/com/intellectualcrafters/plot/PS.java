@@ -1553,10 +1553,10 @@ public class PS{
         Settings.load(configFile);
         try (InputStream stream = getClass().getResourceAsStream("/plugin.properties")) {
             try (BufferedReader br = new BufferedReader(new InputStreamReader(stream))) {
-                String versionString = br.readLine();
-                String commitString = br.readLine();
-                String dateString = br.readLine();
-                this.version = PlotVersion.tryParse(versionString, commitString, dateString);
+                //String versionString = br.readLine();
+                //String commitString = br.readLine();
+                //String dateString = br.readLine();
+                this.version = PlotVersion.tryParse("1.0", "1337", "20.1.1");
                 System.out.println("PlotSquared version is " + this.version);
             }
         } catch (Throwable ignore) {

@@ -75,6 +75,7 @@ public final class NukkitMain extends PluginBase implements Listener, IPlotMain 
 
     @Override
     public void onEnable() {
+        System.out.println("JEAH BOI ! IT WORKED !! ;)");
         try {
             this.name = getDescription().getName();
             getServer().getName();
