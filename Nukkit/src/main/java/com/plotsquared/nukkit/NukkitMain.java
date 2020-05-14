@@ -3,6 +3,7 @@ package com.plotsquared.nukkit;
 import cn.nukkit.Nukkit;
 import cn.nukkit.OfflinePlayer;
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityHuman;
 import cn.nukkit.event.Listener;
@@ -29,6 +30,7 @@ import com.intellectualcrafters.plot.util.block.QueueProvider;
 import com.plotsquared.nukkit.generator.NukkitPlotGenerator;
 import com.plotsquared.nukkit.listeners.PlayerEvents;
 import com.plotsquared.nukkit.listeners.WorldEvents;
+import com.plotsquared.nukkit.mixo.MixoListener;
 import com.plotsquared.nukkit.util.*;
 import com.plotsquared.nukkit.util.block.NukkitHybridGen;
 import com.plotsquared.nukkit.util.block.NukkitLocalQueue;
@@ -75,7 +77,7 @@ public final class NukkitMain extends PluginBase implements Listener, IPlotMain 
 
     @Override
     public void onEnable() {
-        System.out.println("JEAH BOI ! IT WORKED !! ;)");
+        Server.getInstance().getLogger().info("§bMrClean's PlotSquared is starting ;)");
         try {
             this.name = getDescription().getName();
             getServer().getName();
@@ -235,6 +237,7 @@ public final class NukkitMain extends PluginBase implements Listener, IPlotMain 
     @Override
     public void registerPlayerEvents() {
         getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
+        getServer().getPluginManager().registerEvents(new MixoListener(), this);
     }
 
     @Override

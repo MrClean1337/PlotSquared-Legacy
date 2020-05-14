@@ -27,6 +27,7 @@ import cn.nukkit.event.inventory.InventoryCloseEvent;
 import cn.nukkit.event.player.*;
 import cn.nukkit.event.potion.PotionCollideEvent;
 import cn.nukkit.event.redstone.RedstoneUpdateEvent;
+import cn.nukkit.item.Item;
 import cn.nukkit.metadata.MetadataValue;
 import cn.nukkit.plugin.Plugin;
 import com.google.common.base.Optional;
@@ -39,6 +40,7 @@ import com.intellectualcrafters.plot.object.*;
 import com.intellectualcrafters.plot.util.*;
 import com.plotsquared.listener.PlotListener;
 import com.plotsquared.nukkit.object.NukkitPlayer;
+import com.plotsquared.nukkit.mixo.Features;
 import com.plotsquared.nukkit.util.NukkitUtil;
 
 import java.util.HashSet;
@@ -737,7 +739,7 @@ public class PlayerEvents extends PlotListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    /*@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         PlotPlayer pp = NukkitUtil.getPlayer(player);
@@ -777,6 +779,71 @@ public class PlayerEvents extends PlotListener implements Listener {
             case RIGHT_CLICK_AIR: {
                 Plot plot = pp.getCurrentPlot();
                 if (plot == null || !plot.isAdded(pp.getUUID())) {
+                    if (plot == null) {
+                        if (Permissions.hasPermission(pp, C.PERMISSION_ADMIN_INTERACT_ROAD.s(), true)) {
+                            return;
+                        }
+                    } else if (!plot.hasOwner()) {
+                        if (Permissions.hasPermission(pp, C.PERMISSION_ADMIN_INTERACT_UNOWNED.s(), true)) {
+                            return;
+                        }
+                    } else if (Permissions.hasPermission(pp, C.PERMISSION_ADMIN_INTERACT_OTHER.s(), true)) {
+                        return;
+                    }
+                    event.setCancelled(true);
+                    return;
+                }
+                return;
+            }
+        }
+    }
+*/
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    public void onInteract(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        PlotPlayer pp = NukkitUtil.getPlayer(player);
+        PlotArea area = pp.getPlotAreaAbs();
+        if (area == null) {
+            return;
+        }
+        switch (event.getAction()) {
+            case RIGHT_CLICK_BLOCK:
+            case LEFT_CLICK_BLOCK:
+            case PHYSICAL: {
+                Plot plot = pp.getCurrentPlot();
+                if (plot == null || !plot.isAdded(pp.getUUID())) {
+                    Block block = event.getBlock();
+                    if (block != null) {
+                        if (plot != null && Flags.USE.contains(plot, PlotBlock.get(block.getId(), block.getDamage()))) {
+                            return;
+                        }
+                    }
+                    if (plot == null) {
+                        if (Permissions.hasPermission(pp, C.PERMISSION_ADMIN_INTERACT_ROAD.s(), true)) {
+                            return;
+                        }
+                    } else if (!plot.hasOwner()) {
+                        if (Permissions.hasPermission(pp, C.PERMISSION_ADMIN_INTERACT_UNOWNED.s(), true)) {
+                            return;
+                        }
+                    } else if (Permissions.hasPermission(pp, C.PERMISSION_ADMIN_INTERACT_OTHER.s(), true)) {
+                        return;
+                    }
+                    event.setCancelled(true);
+                    return;
+                }
+                return;
+            }
+            case LEFT_CLICK_AIR:
+            case RIGHT_CLICK_AIR: {
+                Plot plot = pp.getCurrentPlot();
+
+                if (plot == null || !plot.isAdded(pp.getUUID())) {
+                    Item item = event.getItem();
+                    if(event.getAction().equals(PlayerInteractEvent.Action.RIGHT_CLICK_AIR) && item != null && Features.isFood(item)){
+                        return;
+                    }
+
                     if (plot == null) {
                         if (Permissions.hasPermission(pp, C.PERMISSION_ADMIN_INTERACT_ROAD.s(), true)) {
                             return;
