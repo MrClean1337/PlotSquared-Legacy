@@ -77,6 +77,7 @@ public class Help extends Command {
             }
         }
         if (cat == null && page == 0) {
+            /*
             StringBuilder builder = new StringBuilder();
             builder.append(C.HELP_HEADER.s());
             for (CommandCategory c : CommandCategory.values()) {
@@ -86,6 +87,20 @@ public class Help extends Command {
             builder.append("\n").append(C.HELP_INFO_ITEM.s().replaceAll("%category%", "all").replaceAll("%category_desc%", "Display all commands"));
             builder.append("\n" + C.HELP_FOOTER.s());
             MainUtil.sendMessage(player, builder.toString(), false);
+            */
+
+            String text = C.PREFIX.s() + "§3Die wichtigsten Befehle:" +
+                    "\n§3- /p claim §eEin Plot beanspruchen" +
+                    "\n§3- /p auto §eAutomatisch ein freies Plot beanspruchen" +
+                    "\n§3- /p h [Nummer/Spieler] §eZu deinem oder anderem Plot teleportieren" +
+                    "\n§3- /p trust [Spieler/§7*§3] §eEin Spieler oder jeder §7(*) §eauf deinem Plot vertrauen" +
+                    "\n§3- /p untrust [Spieler/§7*§3] §eEin Spieler nicht mehr vertrauen" +
+                    "\n§3- /p deny [Spieler/§7*§3] §eEin Spieler darf dein Plot nicht mehr betreten" +
+                    "\n§3- /p undeny [Spieler/§7*§3] §eSpieler darf wieder dein Plot betreten" +
+                    "\n§3- /p info §eInformationen vom aktuellen Plot" +
+                    "\n§3- /bewerten [1-10] §eEin Plot bewerten" +
+                    "\n§3- /bewertungen §eBewertungen vom Plot anschauen";
+            MainUtil.sendMessage(player, text, false);
             return;
         }
         page--;
