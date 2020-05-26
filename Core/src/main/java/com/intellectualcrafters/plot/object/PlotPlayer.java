@@ -11,7 +11,10 @@ import com.intellectualcrafters.plot.object.worlds.SinglePlotArea;
 import com.intellectualcrafters.plot.object.worlds.SinglePlotAreaManager;
 import com.intellectualcrafters.plot.util.*;
 import com.intellectualcrafters.plot.util.expiry.ExpireManager;
+import com.intellectualcrafters.src.Ranks;
 import com.plotsquared.general.commands.CommandCaller;
+import mixoperms.MixoPerms;
+
 import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -124,7 +127,20 @@ public abstract class PlotPlayer implements CommandCaller, OfflinePlotPlayer {
      * @return number of allowed plots within the scope (globally, or in the player's current world as defined in the settings.yml)
      */
     public int getAllowedPlots() {
-        return Permissions.hasPermissionRange(this, "plots.plot", Settings.Limit.MAX_PLOTS);
+        if(MixoPerms.getAPI().user_tools_isAdministration(getName())) {
+            return 127;
+        }
+        if(MixoPerms.getAPI().user_has_groupPermanent(Ranks.EPIC, getName())) {
+            return 9;
+        }
+        if(MixoPerms.getAPI().user_has_groupPermanent(Ranks.PRIME, getName())) {
+            return 8;
+        }
+        if(MixoPerms.getAPI().user_has_groupPermanent(Ranks.PREMIUM, getName())) {
+            return 6;
+        }
+        //return Permissions.hasPermissionRange(this, "plots.plot", Settings.Limit.MAX_PLOTS);
+        return 4;
     }
 
     /**

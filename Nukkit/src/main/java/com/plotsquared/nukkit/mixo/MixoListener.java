@@ -17,17 +17,22 @@ public class MixoListener implements Listener {
         final Player p = e.player;
 
         if(plot != null){
-            final UUID owner = plot.getOwners().iterator().next();
-            if(owner != null){
-                final String owner_name = MainUtil.getName(owner).replace("§e", "");
+            if(plot.hasOwner()){
+                final UUID owner = plot.getOwners().iterator().next();
+                if(owner != null){
+                    final String owner_name = MainUtil.getName(owner).replace("§e", "");
 
-                String rating_text = "Keine";
-                if(plot.hasRatings()){
-                    rating_text = plot.getAverageRating() + "/10 (" + plot.getRatings().size() + "x)";
+                    String rating_text = "Keine";
+                    if(plot.hasRatings()){
+                        double avg = Math.round(plot.getAverageRating() * 10) / 10.0;
+                        rating_text = avg + "/10 (" + plot.getRatings().size() + "x)";
+                    }
+
+                    //p.sendPopup("§3Besitzer: §e" + owner_name + " §7| §3Bewertung: §e" + rating_text);
+                    p.sendActionBar("§3Besitzer: §e" + owner_name + " §8| §3Bewertung: §e" + rating_text, 2, 3, 2);
                 }
-
-                //p.sendPopup("§3Besitzer: §e" + owner_name + " §7| §3Bewertung: §e" + rating_text);
-                p.sendActionBar("§3Besitzer: §e" + owner_name + " §8| §3Bewertung: §e" + rating_text, 2, 3, 2);
+            } else {
+                p.sendActionBar("§3Dieses Plot ist §efrei §3!", 2, 3, 2);
             }
         }
     }

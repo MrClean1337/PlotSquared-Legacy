@@ -6,6 +6,7 @@ Sponge/build
 Core/build
 Bukkit/build
 Nukkit/build
+Core/src/main/lib/MixoPerms_Nukkit.jar
 
 ### Maven ###
 /mvn
