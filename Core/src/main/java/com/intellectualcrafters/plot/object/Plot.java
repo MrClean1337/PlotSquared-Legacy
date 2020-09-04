@@ -28,6 +28,7 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -2841,7 +2842,10 @@ public class Plot {
                 player.teleport(location);
                 return true;
             }
-            MainUtil.sendMessage(player, C.TELEPORT_IN_SECONDS, Settings.Teleport.DELAY + "");
+            final double delay = player.getTeleportDelay();
+            final int delayInTicks = (int) (delay * 20);
+
+            MainUtil.sendMessage(player, C.TELEPORT_IN_SECONDS, delay + "");
             final String name = player.getName();
             TaskManager.TELEPORT_QUEUE.add(name);
             TaskManager.runTaskLater(new Runnable() {
@@ -2856,7 +2860,7 @@ public class Plot {
                         player.teleport(location);
                     }
                 }
-            }, Settings.Teleport.DELAY * 20);
+            }, delayInTicks);
             return true;
         }
         return false;

@@ -130,17 +130,33 @@ public abstract class PlotPlayer implements CommandCaller, OfflinePlotPlayer {
         if(MixoPerms.getAPI().user_tools_isAdministration(getName())) {
             return 127;
         }
-        if(MixoPerms.getAPI().user_has_groupPermanent(Ranks.EPIC, getName())) {
+        if(MixoPerms.getAPI().user_has_groupPermanent(getName(), Ranks.EPIC)) {
             return 9;
         }
-        if(MixoPerms.getAPI().user_has_groupPermanent(Ranks.PRIME, getName())) {
+        if(MixoPerms.getAPI().user_has_groupPermanent(getName(), Ranks.PRIME)) {
             return 8;
         }
-        if(MixoPerms.getAPI().user_has_groupPermanent(Ranks.PREMIUM, getName())) {
+        if(MixoPerms.getAPI().user_has_groupPermanent(getName(), Ranks.PREMIUM)) {
             return 6;
         }
         //return Permissions.hasPermissionRange(this, "plots.plot", Settings.Limit.MAX_PLOTS);
         return 4;
+    }
+
+    public double getTeleportDelay() {
+        if(MixoPerms.getAPI().user_tools_isAdministration(getName())) {
+            return 0;
+        }
+        if(MixoPerms.getAPI().user_has_group(getName(), Ranks.EPIC)) {
+            return 1.5;
+        }
+        if(MixoPerms.getAPI().user_has_group(getName(), Ranks.PRIME)) {
+            return 2.0;
+        }
+        if(MixoPerms.getAPI().user_has_group(getName(), Ranks.PREMIUM)) {
+            return 2.5;
+        }
+        return 3;
     }
 
     /**

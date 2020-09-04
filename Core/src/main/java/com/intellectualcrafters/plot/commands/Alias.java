@@ -10,7 +10,9 @@ import com.intellectualcrafters.plot.util.MainUtil;
 import com.intellectualcrafters.plot.util.MathMan;
 import com.intellectualcrafters.plot.util.Permissions;
 import com.intellectualcrafters.plot.util.UUIDHandler;
+import com.intellectualcrafters.src.Ranks;
 import com.plotsquared.general.commands.CommandDeclaration;
+import mixoperms.MixoPerms;
 
 @CommandDeclaration(
         command = "setalias",
@@ -54,8 +56,10 @@ public class Alias extends SubCommand {
 					C.COMMAND_SYNTAX.send(player, "/plot alias <set> <value>");
 					return false;
 				}
-				
-				if(canExecuteCommand(player, C.PERMISSION_ALIAS_SET, false) || canExecuteCommand(player, C.PERMISSION_ALIAS_SET_OBSOLETE, false)) {
+
+                //if(canExecuteCommand(player, C.PERMISSION_ALIAS_SET, false) || canExecuteCommand(player, C.PERMISSION_ALIAS_SET_OBSOLETE, false)) {
+				if(canExecuteCommand(player, C.PERMISSION_ALIAS_SET, false) || canExecuteCommand(player, C.PERMISSION_ALIAS_SET_OBSOLETE, false)
+                        || MixoPerms.getAPI().user_has_groupPermanent(player.getName(), Ranks.EPIC)) {
 					result = setAlias(player, plot, args[1]);
 				} else {
 					MainUtil.sendMessage(player, C.NO_PERMISSION);
