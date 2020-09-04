@@ -2,6 +2,7 @@ package com.plotsquared.nukkit.util;
 
 import cn.nukkit.OfflinePlayer;
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockWallSign;
 import cn.nukkit.blockentity.BlockEntity;
@@ -13,6 +14,8 @@ import cn.nukkit.level.Position;
 import cn.nukkit.level.biome.Biome;
 import cn.nukkit.level.biome.EnumBiome;
 import cn.nukkit.math.Vector3;
+import cn.nukkit.nbt.tag.CompoundTag;
+import cn.nukkit.scheduler.AsyncTask;
 import com.intellectualcrafters.plot.object.Location;
 import com.intellectualcrafters.plot.object.PlotBlock;
 import com.intellectualcrafters.plot.object.PlotPlayer;
@@ -122,15 +125,20 @@ public class NukkitUtil extends WorldUtil {
 
     @Override
     public void setSign(String worldName, int x, int y, int z, String[] lines) {
-        Level world = getWorld(worldName);
-        BlockWallSign sign = new BlockWallSign(0);
-        Vector3 pos = new Vector3(x, y, z);
-        world.setBlock(pos, sign);
-        BlockEntity tile = world.getBlockEntity(pos);
-        if (tile instanceof BlockEntitySign) {
-            ((BlockEntitySign) tile).setText(lines[0], lines[1], lines[2], lines[3]);
-            tile.scheduleUpdate();
-        }
+        Level level = getWorld(worldName);
+        BlockWallSign sign = new BlockWallSign(2);
+        cn.nukkit.level.Location loc = new cn.nukkit.level.Location(x, y, z, level);
+        level.setBlock(loc, sign);
+
+        BlockEntitySign tile = new BlockEntitySign(loc.getChunk(), (new CompoundTag())
+                .putString("id", "Sign")
+                .putString("Text", lines[0] + "\n" + lines[1] + "\n" + lines[2] + "\n" + lines[3])
+                .putInt("x", (int) x)
+                .putInt("y", (int) y)
+                .putInt("z", (int) z));
+        level.addBlockEntity(tile);
+
+        tile.scheduleUpdate();
     }
 
     @Override

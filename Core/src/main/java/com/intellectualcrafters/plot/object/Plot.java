@@ -998,21 +998,34 @@ public class Plot {
      * @param name
      */
     public void setSign(final String name) {
+        final String name2use;
+        if(name == null || name.equalsIgnoreCase("null")){
+            name2use = "Unbekannt";
+        } else {
+            name2use = name;
+        }
+
         if (!isLoaded()) {
             return;
         }
         if (!PS.get().isMainThread(Thread.currentThread())) {
-            TaskManager.runTask(() -> Plot.this.setSign(name));
+            TaskManager.runTask(() -> Plot.this.setSign(name2use));
             return;
         }
         PlotManager manager = this.area.getPlotManager();
         if (this.area.ALLOW_SIGNS) {
             Location loc = manager.getSignLoc(this.area, this);
             String id = this.id.x + ";" + this.id.y;
-            String[] lines = new String[] {C.OWNER_SIGN_LINE_1.formatted().replaceAll("%id%", id),
-                C.OWNER_SIGN_LINE_2.formatted().replaceAll("%id%", id).replaceAll("%plr%", name),
-                C.OWNER_SIGN_LINE_3.formatted().replaceAll("%id%", id).replaceAll("%plr%", name),
-                C.OWNER_SIGN_LINE_4.formatted().replaceAll("%id%", id).replaceAll("%plr%", name)};
+//            String[] lines = new String[] {C.OWNER_SIGN_LINE_1.formatted().replaceAll("%id%", id),
+//                C.OWNER_SIGN_LINE_2.formatted().replaceAll("%id%", id).replaceAll("%plr%", name),
+//                C.OWNER_SIGN_LINE_3.formatted().replaceAll("%id%", id).replaceAll("%plr%", name),
+//                C.OWNER_SIGN_LINE_4.formatted().replaceAll("%id%", id).replaceAll("%plr%", name)};
+
+            String[] lines = new String[] {"§3Besitzer:",
+                    "§e" + name2use,
+                    "",
+                    "§6ID: " + id};
+
             WorldUtil.IMP.setSign(this.getWorldName(), loc.getX(), loc.getY(), loc.getZ(), lines);
         }
     }
