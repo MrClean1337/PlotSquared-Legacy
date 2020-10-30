@@ -42,6 +42,7 @@ import com.plotsquared.listener.PlotListener;
 import com.plotsquared.nukkit.object.NukkitPlayer;
 import com.plotsquared.nukkit.mixo.Features;
 import com.plotsquared.nukkit.util.NukkitUtil;
+import nukkitcoders.mobplugin.entities.monster.flying.Vex;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -129,6 +130,16 @@ public class PlayerEvents extends PlotListener implements Listener {
         if (event instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent specific = (EntityDamageByEntityEvent) event;
             Entity damager = specific.getDamager();
+
+            if(specific.getEntity() instanceof Vex && damager instanceof Player) {
+                Vex vex = (Vex) specific.getEntity();
+                if(vex.hasCustomName()){
+                    if(vex.getNameTag().equals("§r§c§lMIXOGEIST§r§r§4§r")){
+                        return;
+                    }
+                }
+            }
+
             Location l = NukkitUtil.getLocation(damager);
             if (!PS.get().hasPlotArea(l.getWorld())) {
                 return;

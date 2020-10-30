@@ -6,7 +6,6 @@ Sponge/build
 Core/build
 Bukkit/build
 Nukkit/build
-Core/src/main/lib/MixoPerms_Nukkit.jar
 
 ### Maven ###
 /mvn
@@ -142,3 +141,6 @@ p2error.txt
 *.bat
 Nukkit/build/resources/main/plugin.yml
 docs/
+.gitignore
+Nukkit/src/main/lib/
+Core/src/main/lib/

@@ -9,6 +9,7 @@ dependencies {
     compile(project(":Core"))
     compile("com.google.guava:guava:21.0")
     compile("cn.nukkit:nukkit:1.0-SNAPSHOT")
+    compile files('src/main/lib/MobPlugin-1.16.3.jar')
 }
 
 sourceCompatibility = 1.8
