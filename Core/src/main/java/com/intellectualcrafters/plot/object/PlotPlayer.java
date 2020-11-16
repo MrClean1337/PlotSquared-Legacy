@@ -127,20 +127,24 @@ public abstract class PlotPlayer implements CommandCaller, OfflinePlotPlayer {
      * @return number of allowed plots within the scope (globally, or in the player's current world as defined in the settings.yml)
      */
     public int getAllowedPlots() {
+        int extra = 0;
+        if(MixoPerms.getAPI().user_has_groupPermanent(getName(), Ranks.MIXOSUCHTI)) {
+            extra = 1;
+        }
         if(MixoPerms.getAPI().user_tools_isAdministration(getName())) {
-            return 127;
+            return 127 + extra;
         }
         if(MixoPerms.getAPI().user_has_groupPermanent(getName(), Ranks.EPIC)) {
-            return 9;
+            return 9 + extra;
         }
         if(MixoPerms.getAPI().user_has_groupPermanent(getName(), Ranks.PRIME)) {
-            return 8;
+            return 8 + extra;
         }
         if(MixoPerms.getAPI().user_has_groupPermanent(getName(), Ranks.PREMIUM)) {
-            return 6;
+            return 6 + extra;
         }
         //return Permissions.hasPermissionRange(this, "plots.plot", Settings.Limit.MAX_PLOTS);
-        return 4;
+        return 4 + extra;
     }
 
     public double getTeleportDelay() {
