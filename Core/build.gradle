@@ -9,7 +9,7 @@ dependencies {
     compile 'org.yaml:snakeyaml:1.16'
     compile 'com.google.code.gson:gson:2.8.6'
     compileOnly 'org.jetbrains:annotations:19.0.0'
-    compile files('src/main/lib/MixoPerms_Nukkit.jar')
+    compile files('src/main/lib/MixoPerms Nukkit.jar')
     compile("cn.nukkit:nukkit:1.0-SNAPSHOT")
 }
 
